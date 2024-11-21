@@ -11,11 +11,22 @@ const container = document.getElementById("container"); // "Traemos" utilizando 
  * imprime el campo "name" y el campo "lastname" separados por un espacio
  */
 function showData(dataArray) {
+  
+  if (Array.isArray(dataArray)){
   // El for itera sobre los elementos del array
   for (const item of dataArray) {
     // En la siguiente línea se utilizan "backticks" para armar el String. Más info => https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Template_literals
     container.innerHTML += `<p> ${item.name} ${item.lastname} </p>`; // Se concatena cada párrafo de la manera que queremos mostrarlo al innerHTML del contenedor
   }
+  } else {
+    console.error("Error: los datos no son un array", dataArray);
+  }
 }
 
 // Escribe el código necesario para realizar el fetch al archivo con los datos y mostrar los estudiantes con la función showData
+fetch(DATA_URL)
+    .then(response => response.json())
+    .then(data => {
+      showData(data.students);
+    })
+    .catch(error => console.log (error));
